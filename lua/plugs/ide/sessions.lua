@@ -1,21 +1,13 @@
 return {
 	"rmagatti/auto-session",
 	lazy = true,
-	keys = {
-		-- Will use Telescope if installed or a vim.ui.select picker otherwise
-		{ "<Space>wr", "<cmd>AutoSession search<CR>", desc = "Session search" },
-		{ "<Space>ws", "<cmd>AutoSession save<CR>", desc = "Save session" },
-		{ "<Space>wa", "<cmd>AutoSession toggle<CR>", desc = "Toggle autosave" },
-		{ "<Space>wd", "<cmd>AutoSession deletePicker<CR>", desc = "Pick a session to delete" },
-	},
-
 	---enables autocomplete for opts
 	-- -@module "auto-session"
 	-- -@type AutoSession.Config
 	opts = {
 		-- The following are already the default values, no need to provide them if these are already the settings you want.
 		session_lens = {
-			picker = "fzf", -- "telescope"|"snacks"|"fzf"|"select"|nil Pickers are detected automatically but you can also manually choose one. Falls back to vim.ui.select
+			picker = "telescope", -- "telescope"|"snacks"|"fzf"|"select"|nil Pickers are detected automatically but you can also manually choose one. Falls back to vim.ui.select
 			-- mappings = {
 			-- 	-- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
 			-- 	delete_session = { "i", "<C-d>" },

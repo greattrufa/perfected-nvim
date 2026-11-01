@@ -10,24 +10,16 @@ return {
 				"prettier",
 				"clang-format",
 				"stylua",
-				"talpo",
+				"taplo", -- was talpo
 				"black",
 			},
 		})
-
-		vim.keymap.set({ "n", "v" }, "<Space>fm", function()
-			require("conform").format({
-				lsp_fallback = true,
-				async = false,
-				timeout_ms = 500,
-			})
-		end, { desc = "Format file or range (in visual mode)" })
 
 		require("conform").setup({
 			formatters_by_ft = {
 				json = { "prettier" },
 				yaml = { "prettier" },
-				markdown = { "prettier" },
+				markdown = { "prettier", "injected" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				c = { "clang-format" },
@@ -36,7 +28,6 @@ return {
 
 			format_on_save = {
 				lsp_format = "fallback",
-				lsp_fallback = true,
 				async = false,
 				quiet = false,
 				timeout_ms = 3000,
@@ -44,10 +35,15 @@ return {
 
 			formatters = {
 				injected = { options = { ignore_errors = true } },
-				stylua = {
-					prepend_args = { "--respect-ignores" },
-				},
 			},
 		})
 	end,
+
+	vim.keymap.set({ "n", "v" }, "<Leader>fm", function()
+		require("conform").format({
+			lsp_format = "fallback", -- was lsp_fallback = true
+			async = false,
+			timeout_ms = 500,
+		})
+	end, { desc = "Format file or range (in visual mode)" }),
 }

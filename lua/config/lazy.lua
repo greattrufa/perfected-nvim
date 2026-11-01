@@ -13,5 +13,13 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{ import = "plugs" },
+  { import = "plugs.ide" },
+  { import = "plugs.lang" },
+  { import = "plugs.looks" },
+  { import = "plugs.looks" },
 	{ import = "plugs.tools" },
+
+  git = {
+    timeout = 360, -- This increases the timeout to 6 minutes somewhere
+  },
 })

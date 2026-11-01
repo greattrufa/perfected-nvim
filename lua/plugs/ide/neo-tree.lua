@@ -10,6 +10,9 @@ return {
 		lazy = false,
 		config = function()
 			require("neo-tree").setup({
+				require("transparent").clear_prefix("NeoTree"),
+
+				open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
 				close_if_last_window = true,
 				filesystem = {
 					filtered_items = {
@@ -18,14 +21,6 @@ return {
 						hide_dotfiles = false,
 						hide_gitignored = false,
 					},
-				},
-				commands = {
-					img_wezterm = function(state)
-						local node = state.tree:get_node()
-						if node.type == "file" then
-							require("image_preview").PreviewImage(node.path)
-						end
-					end,
 				},
 				window = {
 					position = "right",
@@ -36,22 +31,26 @@ return {
 					},
 					mappings = { -- Define your specific key mappings here
 						-- ["<Space>p"] = "image_wezterm", -- " or another map
-						["P"] = { -- This should be inside 'mappings'
-							"toggle_preview",
-							config = {
-								use_float = true,
-								use_image_nvim = true,
-							},
-						},
-						["<cr>"] = "open_tabnew",
+						-- ["o"] = { -- This should be inside 'mappings'
+						-- 	-- "toggle_preview",
+						-- 	"open_check_images",
+						-- 	config = {
+						-- 		use_float = true,
+						-- 		use_image_nvim = true,
+						-- 	},
+						-- },
+						["o"] = function(state)
+							local node = state.tree:get_node()
+							if vim.list_contains({ "jpg", "png", "jpeg", "pdf" }, node.ext) then
+								local command = vim.fn.has("mac") == 1 and "open" or "xdg-open"
+								vim.fn.jobstart(command .. " " .. node.path)
+							else
+								vim.cmd.edit(node.path)
+							end
+						end,
 					},
 				},
 			})
-
-			local map = vim.keymap.set
-			local opts = { noremap = true, silent = true }
-
-			map("n", "<C-c>", ":Neotree toggle<CR>", opts, { desc = "Toggle the filesystem" })
 		end,
 	},
 	{

@@ -6,7 +6,6 @@ return {
 			require("mason-nvim-dap").setup({
 				ensure_installed = {
 					"codelldb",
-					-- For vscode compatibility with .vscode
 					"cpptools",
 				},
 				automatic_installation = true,

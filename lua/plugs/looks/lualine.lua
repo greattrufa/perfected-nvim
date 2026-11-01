@@ -6,9 +6,11 @@ return {
 	},
 	config = function()
 		require("lualine").setup({
+      -- require('transparent').clear_prefix('lualine'),
+      
 			options = {
 				icons_enabled = true,
-				theme = "base16",
+				theme = "onedark",
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
